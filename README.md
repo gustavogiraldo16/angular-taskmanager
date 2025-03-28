@@ -95,8 +95,6 @@ src/
 - **Protección de Rutas**:
    - Se ha implementado una protección de rutas utilizando un **Auth Guard** que redirige a los usuarios no autenticados al componente de login.
 
-   - CRUD de Tareas(Tasks)
-
 ### Posibles Problemas Conocidos
 
 - **Problema de CORS**: Si la API backend no está configurada para permitir solicitudes CORS desde `http://localhost:4200`, podrías encontrarte con problemas de acceso. Asegúrate de que la API permita solicitudes desde el origen adecuado.
@@ -107,7 +105,7 @@ src/
 
 - **Manejo de Errores**: Se podría mejorar el manejo de errores de las peticiones HTTP mostrando mensajes de error amigables para el usuario.
 - **Paginación y Filtros**: Actualmente, todas las tareas se cargan de una vez. Se podrían agregar funcionalidades de paginación y filtros para manejar grandes cantidades de datos.
-- **CRUD de Tareas(Tasks)**: Implementar CRUD de usuarios que solo el administrador puedad ver.
+- **CRUD de Usuarios(Users)**: Implementar CRUD de usuarios que solo el administrador puedad ver.
 
 ## Contribuciones
 
