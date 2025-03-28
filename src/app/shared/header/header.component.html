@@ -10,10 +10,10 @@
 
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0" *ngIf="isAuthenticated">
         <li><a href="#" class="nav-link px-2 link-secondary" routerLink="/tasks">Tareas</a></li>
-        <li><a href="#" class="nav-link px-2" routerLink="/user">Usuarios</a></li>
+        <!-- <li><a href="#" class="nav-link px-2" routerLink="/user">Usuarios</a></li> -->
     </ul>
 
-    <div class="col-md-3 text-end">
+    <div class="col-md-3 text-end me-4">
         <button type="button" class="btn btn-outline-primary me-2" routerLink="/login" *ngIf="!isAuthenticated">Login</button>
         <button type="button" class="btn btn-outline-primary me-2" routerLink="/register" *ngIf="!isAuthenticated">Registrarse</button>
         <button type="button" class="btn btn-primary" (click)="logout()" *ngIf="isAuthenticated">Cerrar sesión</button>

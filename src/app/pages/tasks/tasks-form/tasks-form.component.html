@@ -1,0 +1,69 @@
+<div class="container mt-3">
+    <h2>{{ id ? 'Actualizar Tarea' : 'Crear Tarea' }}</h2>
+
+    @if (alertCreateVisible) {
+        <div class="alert alert-success" role="alert">
+            Se creo la tarea correctamente
+        </div>
+    }
+
+    @if (alertUpdateVisible) {
+        <div class="alert alert-primary" role="alert">
+            Se actualizo la tarea correctamente
+        </div>
+    }
+
+    @if (alertErrorVisible) {
+        <div class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+        </div>
+    }
+
+    <form (ngSubmit)="submitForm()">
+        <!-- Título -->
+        <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input type="text" class="form-control" [(ngModel)]="task.title" name="title" required />
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" [(ngModel)]="task.description" name="description" required></textarea>
+        </div>
+
+        <!-- Estado -->
+        <div class="mb-3">
+            <label class="form-label">Estado</label>
+            <select class="form-select" [(ngModel)]="task.status" name="status" required>
+                <option value="PENDING">Pendiente</option>
+                <option value="IN_PROGRESS">En Progreso</option>
+                <option value="COMPLETED">Completada</option>
+            </select>
+        </div>
+
+        <!-- Prioridad -->
+        <div class="mb-3">
+            <label class="form-label">Prioridad</label>
+            <select class="form-select" [(ngModel)]="task.priority" name="priority" required>
+                <option value="LOW">Baja</option>
+                <option value="MEDIUM">Media</option>
+                <option value="HIGH">Alta</option>
+            </select>
+        </div>
+
+        <!-- Fecha de Vencimiento -->
+        <div class="mb-3">
+            <label class="form-label">Fecha de vencimiento</label>
+            <input type="date" class="form-control" [(ngModel)]="task.dueDate" name="dueDate" required />
+        </div>
+
+        <!-- ID Tarea (solo para actualización) tipo hidden -->
+        <div *ngIf="task.id" class="mb-3">
+            <input type="hidden" [(ngModel)]="task.id" name="id" />
+        </div>
+
+        <!-- Botón -->
+        <button type="submit" class="btn btn-primary w-100">{{ id ? 'Actualizar' : 'Crear' }}</button>
+    </form>
+</div>
