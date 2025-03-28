@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../../../components/navbar/navbar.component";
 import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  imports: [FormsModule, CommonModule, NavbarComponent]        // Aquí puedes agregar otros módulos si los necesitas
+  imports: [FormsModule, CommonModule]        // Aquí puedes agregar otros módulos si los necesitas
 })
 export class RegisterComponent {
     name: string = '';

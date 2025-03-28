@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
-import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { TaskService } from '../../services/task/task.service';
 import { Task } from '../../models/task.model';
 import { TaskNew } from '../../models/task-new.model';
@@ -12,7 +11,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css'],
-  imports: [NavbarComponent, FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule]
 })
 export class TasksComponent implements OnInit {
   tasks: Task[] = [];  // Lista de tareas

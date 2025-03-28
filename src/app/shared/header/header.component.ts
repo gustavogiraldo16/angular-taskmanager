@@ -4,12 +4,12 @@ import { RouterLink, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'app-header',
   imports: [CommonModule, RouterLink],
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.css'
 })
-export class NavbarComponent {
+export class HeaderComponent {
   get isAuthenticated(): boolean {
     return !!localStorage.getItem('token');  // Verifica si hay token en localStorage
   }
