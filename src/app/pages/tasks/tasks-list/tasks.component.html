@@ -1,57 +1,151 @@
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <!-- Título de la página -->
-            <h2 class="my-4">Lista de Tareas</h2>
-            <div class="text-end mb-4">
-                <button class="btn btn btn-success" type="button" routerLink="/tasks/create">Crear Nueva Tarea</button>
-            </div>
+  <div class="row">
+    <div class="col-12">
+      <!-- Título de la página -->
+      <h2 class="my-4">Lista de Tareas</h2>
+      <div
+        class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2"
+      >
+        <div class="d-flex gap-3 flex-wrap">
 
-            @if (alertDeleteVisible) {
-                <div class="alert alert-success" role="alert">
-                    Se eliminó la tarea correctamente
-                </div>
-            }
+          <!-- Filtro por Prioridad -->
+          <div>
+            <label class="form-label mb-0">Prioridad</label>
+            <select
+              class="form-select"
+              [(ngModel)]="filterPriority"
+              (change)="onFilterChange()"
+            >
+              <option value="">Todas</option>
+              <option value="LOW">Baja</option>
+              <option value="MEDIUM">Media</option>
+              <option value="HIGH">Alta</option>
+            </select>
+          </div>
 
-            <!-- Tabla de tareas -->
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Título</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Fecha de Vencimiento</th>
-                            <th scope="col">Prioridad</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let task of tasks">
-                            <td>{{ task.title }}</td>
-                            <td><p>{{ task.description }}</p></td>
-                            <td>{{ task.dueDate }}</td>
-                            <td>{{ task.priority }}</td>
-                            <td>{{ task.status }}</td>
-                            <td>
-                                <div class="d-inline-flex gap-2">
-                                    <button
-                                        class="btn btn-outline-info btn-sm"
-                                        type="button"
-                                        (click)="goToEdit(task)"
-                                    >
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button class="btn btn-outline-danger btn-sm" (click)="deleteTask(task.id)">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
+          <!-- Filtro por Estado -->
+          <div>
+            <label class="form-label mb-0">Estado</label>
+            <select
+              class="form-select"
+              [(ngModel)]="filterStatus"
+              (change)="onFilterChange()"
+            >
+              <option value="">Todos</option>
+              <option value="PENDING">Pendiente</option>
+              <option value="IN_PROGRESS">En Progreso</option>
+              <option value="COMPLETED">Completada</option>
+            </select>
+          </div>
         </div>
+
+        <div>
+          <button
+            class="btn btn-success"
+            type="button"
+            routerLink="/tasks/create"
+          >
+            Crear Nueva Tarea
+          </button>
+        </div>
+      </div>
+
+      @if (alertDeleteVisible) {
+      <div class="alert alert-success" role="alert">
+        Se eliminó la tarea correctamente
+      </div>
+      }
+
+      <!-- Tabla de tareas -->
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Título</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Fecha de Vencimiento</th>
+              <th scope="col">Prioridad</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of filteredTasks">
+              <td>{{ task.title }}</td>
+              <td>
+                <p>{{ task.description }}</p>
+              </td>
+              <td>{{ task.dueDate }}</td>
+              <td>{{ task.priority }}</td>
+              <td>{{ task.status }}</td>
+              <td>
+                <div class="d-inline-flex gap-2">
+                  <button
+                    class="btn btn-outline-info btn-sm"
+                    type="button"
+                    (click)="goToEdit(task)"
+                  >
+                    <i class="bi bi-pencil-fill"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-danger btn-sm"
+                    (click)="deleteTask(task.id)"
+                  >
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <!-- tasks.component.html -->
+      <div class="list-group">
+        @for (task of filteredTasks; track task.id) {
+        <label class="list-group-item d-flex gap-2">
+          <input
+            class="form-check-input flex-shrink-0"
+            type="checkbox"
+            [checked]="task.status === 'COMPLETED'"
+          />
+          <span>
+            {{ task.title }}
+            <small class="d-block text-body-secondary">
+              {{ task.description }}
+            </small>
+            <small class="d-block text-body-secondary">
+              <strong>Fecha de Vencimiento:</strong> {{ task.dueDate }}
+            </small>
+            <small class="d-block text-body-secondary">
+              <strong>Prioridad:</strong> {{ task.priority }}
+            </small>
+            <small class="d-block text-body-secondary">
+              <strong>Estado:</strong> {{ task.status }}
+            </small>
+            <div class="d-inline-flex gap-2">
+              <button
+                class="btn btn-outline-info btn-sm"
+                type="button"
+                (click)="goToEdit(task)"
+              >
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm"
+                (click)="deleteTask(task.id)"
+              >
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </div>
+          </span>
+        </label>
+        }
+      </div>
+    </div>
+  </div>
 </div>

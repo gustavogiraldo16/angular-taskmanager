@@ -16,6 +16,9 @@ export class TasksComponent implements OnInit {
   tasks: Task[] = [];  // Lista de tareas
   token: string = '';  // Aquí se guardará el token
   alertDeleteVisible: boolean = false;  // Bandera para mostrar la alerta de tarea eliminada
+  filterStatus: string = ''; // Filtro por estado
+  filterPriority: string = ''; // Filtro por prioridad
+  filteredTasks: Task[] = []; // Tareas filtradas
 
   constructor(
     private taskService: TaskService,
@@ -32,6 +35,7 @@ export class TasksComponent implements OnInit {
     this.taskService.getTasks(this.token).subscribe({
       next: (data) => {
         this.tasks = data;
+        this.applyFilters();
       },
       error: (e) => {
         console.error('Error al cargar las tareas', e);
@@ -45,6 +49,7 @@ export class TasksComponent implements OnInit {
         this.alertDeleteVisible = true;  // Muestra la alerta de tarea eliminada
         // Se elimina la tarea de la lista
         this.tasks = this.tasks.filter(task => task.id !== id);
+        this.applyFilters();  // Aplica los filtros después de eliminar la tarea
         setTimeout(() => {
           this.alertDeleteVisible = false;  // Oculta la alerta después de 2 segundos
         }, 2000);
@@ -64,4 +69,17 @@ export class TasksComponent implements OnInit {
     this.authService.logout();  // Llamar al método logout
     this.router.navigate(['/login']);  // Redirigir al login después de cerrar sesión
   }
+
+  onFilterChange(): void {
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    this.filteredTasks = this.tasks.filter(task => {
+      const statusMatch = this.filterStatus ? task.status === this.filterStatus : true;
+      const priorityMatch = this.filterPriority ? task.priority === this.filterPriority : true;
+      return statusMatch && priorityMatch;
+    });
+  }
+
 }
